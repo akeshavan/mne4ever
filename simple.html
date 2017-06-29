@@ -1,7 +1,7 @@
 <html>
 
 <head>
-  <script src="brainbrowser.surface-viewer.min.js"></script>
+  <script src="/static/brainbrowser.surface-viewer.min.js"></script>
   <style>
   body, html, #brainbrowser, canvas {
     width: 100%;
@@ -17,12 +17,12 @@
 </body>
 
 <script>
-BrainBrowser.config.set("worker_dir", "./workers");
+BrainBrowser.config.set("worker_dir", "/static/workers");
 
 BrainBrowser.config.set("color_maps", [
   {
     name: "Spectral",
-    url: "spectral.txt",
+    url: "/static/spectral.txt",
   }
 ]);
 
@@ -46,7 +46,7 @@ function handleBrainz(viewer) {
 
 
   // Load a model into the scene.
-  viewer.loadModelFromURL('./lh.white', {format:"freesurferbin"});
+  viewer.loadModelFromURL('/static/lh.white', {format:"freesurferbin"});
 
   viewer.addEventListener('displaymodel', function(brainBrowserModel) {
 
@@ -63,7 +63,7 @@ function handleBrainz(viewer) {
 
       }});
 
-      viewer.loadIntensityDataFromURL("curv.txt", {
+      viewer.loadIntensityDataFromURL("/static/curv.txt", {
         format: "text",
         name: "curvature",
         model_name: "lh.white",
@@ -74,6 +74,24 @@ function handleBrainz(viewer) {
 
 
 }
+
+/* WebSockets */
+
+var host = window.location.host;
+    var ws = new WebSocket('ws://'+host+'/ws');
+    ws.onopen = function(){
+      console.log("opened socket")
+    };
+    ws.onmessage = function(ev){
+      console.log(ev)
+    };
+    ws.onclose = function(ev){
+      console.log("closed socket")
+    };
+    ws.onerror = function(ev){
+      console.log("an error occured")
+    };
+
 </script>
 
 </html>
