@@ -3,9 +3,9 @@ simple brainbrowser code
 
 start a python server 
 
-`python -m http.server 7777`
+`python app.py`
 
-navigate to localhost:7777/simple.html
+navigate to [http://localhost:8888](http://localhost:8888)
 
 for web sockets, in a terminal do:
 
