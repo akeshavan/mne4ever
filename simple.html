@@ -75,6 +75,22 @@ function handleBrainz(viewer) {
 
 }
 
+/* chnage color function*/
+
+function colorChanger(value){
+  console.log("value is", value)
+  var intensity_data = window.viewer.model_data.get("lh.white").intensity_data
+  intensity_data[0].values.forEach(function(val, idx, arr){
+    arr[idx] = parseFloat(value)
+  })
+
+  window.viewer.updateColors({
+    model_name: "lh.white"
+  });
+
+  console.log("viewer update")
+}
+
 /* WebSockets */
 
 var host = window.location.host;
@@ -83,7 +99,9 @@ var host = window.location.host;
       console.log("opened socket")
     };
     ws.onmessage = function(ev){
-      console.log(ev)
+      var data = JSON.parse(ev.data)
+      console.log(data)
+      colorChanger(data.value)
     };
     ws.onclose = function(ev){
       console.log("closed socket")
